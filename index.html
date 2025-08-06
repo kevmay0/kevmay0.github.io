@@ -1,7 +1,2094 @@
 <!DOCTYPE html>
-<html>
+<!--
+  -- Kevin May
+  -- @version 1.0
+  -- @date 24.07.2025
+  -- @url https://
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kevin May – Portfolio</title>
+  <!-- Animate.css for entrance animations -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts for font style -->
+  <link href="https://fonts.googleapis.com/css?family=Helvetica:400,700&display=swap" rel="stylesheet">
+  <!-- AOS CSS for scroll animations -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      color: #fff;
+      background: #16181a;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    nav.navbar {
+      position: fixed;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 800px;
+      display: flex;
+      justify-content: center;
+      background: rgba(22, 24, 26, 0.2);
+      backdrop-filter: saturate(180%) blur(10px); /* glass effect */
+      -webkit-backdrop-filter: saturate(180%) blur(10px); /* for Safari */
+      padding: 1rem 0;
+      z-index: 10;
+      font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+      will-change: transform;
+    }
+    nav.navbar.hidden {
+      transform: translateY(-100%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    nav.navbar ul.nav-links {
+      list-style: none;
+      display: flex;
+      gap: 3rem;
+      margin: 0;
+      padding: 0;
+    }
+    nav.navbar ul.nav-links li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1rem;
+      position: relative;
+      padding-bottom: 4px;
+      transition: color 0.3s ease;
+    }
+    nav.navbar ul.nav-links li a::after { /* Animated underline effect */
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background-color: white;
+      transition: width 0.3s ease;
+      border-radius: 1px;
+    }
+    nav.navbar ul.nav-links li a:hover::after {
+      width: 100%;
+    }
+    nav.navbar a, .carousel-arrow, .dropdown-toggle {
+      user-select: none;
+    }
+
+    .hero-section {
+      position: relative;
+      height: 100vh;
+      min-height: 500px;
+      overflow: hidden;
+      width: 100%;
+      max-width: 100vw;
+    }
+    .hero-slideshow {
+      display: flex;
+      width: 300%; /* for 3 images */
+      height: 100%;
+      transition: transform 1s ease-in-out;
+    }
+    .hero-slideshow img {
+      width: 100vw;
+      height: 100%;
+      /* object-fit: contain; /* scales image to fit within container without cropping */
+      object-fit: cover;
+      flex-shrink: 0;
+      user-select: none;
+      opacity: 0.40;
+    }
+    .hero-content {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 5;
+      pointer-events: none;
+      color: white;
+    }
+    .hero-content h1 {
+      font-size: 4rem;
+      margin: 0;
+      letter-spacing: 5px;
+      font-weight: bold;
+    }
+    .hero-content h2 {
+      font-size: 2rem;
+      margin-top: 1rem;
+      font-weight: 400;
+      letter-spacing: 2px;
+    }
+
+    .highlights-row {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      flex-wrap: nowrap;
+      margin: 3rem auto;
+      padding: 0 1rem;
+      overflow-x: auto;
+      overflow-y: hidden;
+      align-items: center;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+    .flip-card {
+      flex: 0 0 220px;
+      height: 180px;
+      background: transparent;
+      perspective: 1000px;
+      box-sizing: border-box;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%; height: 100%;
+      transition: transform 0.7s;
+      transform-style: preserve-3d;
+    }
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%; height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #232428;
+      border-radius: 15px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+    .flip-card-front { z-index: 2; }
+    .flip-card-back {
+      transform: rotateY(180deg);
+      background: #1c1e21;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 1rem;
+      box-sizing: border-box;
+      height: 100%;
+    }
+    .flip-card i {
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .flip-card-back a {
+      color: #90D5FF;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+    .flip-card-back a:hover {
+      color: #63B8FF;
+      text-decoration: none;
+    }
+
+    .section-header {
+      text-align: center;
+      font-size: 3rem;
+      margin: 3rem 0 2rem 0;
+      font-weight: bold;
+      color: #fff;
+      letter-spacing: 0.1em;
+      user-select: none;
+    }
+
+    .projects-section {
+      background: #1c1e21;
+      padding: 3rem 0;
+    }
+    .project-carousel {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      position: relative;
+      flex-wrap: nowrap;
+      flex-direction: row;
+      flex-wrap: nowrap;
+    }
+    .carousel-item {
+      display: none;
+      flex-direction: row;
+      align-items: stretch;
+      justify-content: flex-end;
+      width: 100%;
+      min-width: 1000px;
+      max-width: 1000px;
+      min-height: 300px;
+      position: relative;
+    }
+    .carousel-item.active {
+      display: flex;
+      animation: fadeIn 0.8s;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+    .carousel-text {
+      flex: 1 1 0;
+      max-width: unset;
+      min-width: 0;
+      background: linear-gradient(to right, rgba(28,30,33,1) 80%, rgba(28,30,33,0));
+      color: #fff;
+      border-radius: 14px 0 0 14px;
+      z-index: 2;
+      margin-right: -70px;              /* adjust for overlay look as needed */
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: left;
+      padding: 0rem 6rem 0rem 1.5rem;
+    }
+    .carousel-text h2 {
+      font-size: 2rem;
+      margin-bottom: 0.9rem;
+    }
+    .carousel-text p {
+      margin-bottom: 1rem;
+      color: #cfd8dc;
+      line-height: 1.5;
+    }
+    .carousel-text a {
+      color: #90D5FF;
+      text-decoration: underline; 
+      transition: color 0.3s ease;
+    }
+    .carousel-text a:hover {
+      color: #63B8FF;
+      text-decoration: none;
+    }
+    .carousel-data {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 0.5rem;
+      font-size: 1rem;
+      color: #e3f2fd;
+    }
+    .carousel-data td {
+      padding: 0.35em 0.5em;
+      border-bottom: 1px solid rgba(255,255,255,0.13);
+    }
+    .carousel-data tr:last-child td {
+      border-bottom: none;
+    }
+    .carousel-data td:first-child {
+      font-weight: 600;
+      opacity: 0.85;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+    }
+    .carousel-data td:last-child span {
+      color: #b0c4de;
+      font-size: 0.9em;
+    }
+    .carousel-media {
+      height: 500px;
+      min-width: 380px;
+      max-width: 700px;
+      width: auto;
+      object-fit: cover;        /* 'contain' for no crop */
+      border-radius: 0 14px 14px 0;
+      z-index: 1;
+      background: #1c1e21;
+    }
+    .carousel-media.contain-fit {
+      object-fit: contain;
+    }
+    .carousel-media.white-bg {
+      background: #fff;
+    }
+    .carousel-item.media-only .carousel-media {
+      max-width: 100%;               /* or 1000px if your carousel is 1000px wide */
+      width: 100%;
+      border-radius: 14px;           /* 14px all around for aesthetic consistency */
+      min-width: 0;                  /* reset min-width if needed */
+      margin: 0 auto;                /* center if needed */
+      object-fit: contain;           /* (optional) or keep cover */
+      display: block;
+    }
+    .carousel-arrow {
+      font-size: 2rem;
+      color: #fff;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .carousel-arrow:hover { opacity: 1; }
+    .carousel-indicators {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 1rem;
+      width: 100%;
+      flex-wrap: nowrap;
+    }
+    .carousel-indicators button {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .carousel-indicators button.active {
+      background: #fff; /* highlight color */
+    }
+
+    .additional-experiences {
+      max-width: 1000px;
+      margin: 3rem auto;
+      text-align: center;
+      position: relative;
+    }
+    .dropdown-toggle {
+      background: #232428;
+      color: #fff;
+      font-size: 1.5rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      user-select: none;
+      letter-spacing: 0.05em;
+    }
+    .dropdown-toggle:hover {
+      background: #00aaff;
+      color: #fff;
+    }
+    .dropdown-content {
+      position: relative;
+      width: 100vw;
+      max-width: 100vw;
+      margin: 1rem 0 0 0;
+      padding: 0 2rem;
+      box-sizing: border-box;
+      max-height: 0;
+      overflow: hidden;
+      background-color: #1c1e21;
+      border-radius: 0 0 12px 12px;
+      transition: max-height 0.5s ease;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+    }
+    .dropdown-content .project-carousel {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 1000px; /* keep consistent max width */
+      justify-content: center; /* flex centering */
+    }
+    .dropdown-content.active {
+      max-height: 3000px;
+      overflow: visible;
+      padding: 2rem 3rem;
+    }
+    .dropdown-content .carousel-arrow {
+      position: relative;
+      z-index: 10;
+      color: #fff;
+      opacity: 0.7;
+    }
+    .dropdown-content .carousel-text {
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: linear-gradient(to right, rgba(28,30,33,1) 80%, rgba(28,30,33,0));
+      padding: 0rem 7rem 0rem 1.5rem;
+      border-radius: 14px 0 0 14px;
+      color: #fff;
+      min-width: 300px;
+      max-width: 300px;
+      z-index: 2;
+      margin-right: -70px;
+      position: relative;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 2rem 0;
+      background: #16181a;
+      color: #aaa;
+      font-size: 1rem;
+    }
+
+    @media (max-width: 700px) {
+      .project-carousel {
+        width: 100vw;
+        max-width: 100vw;
+        padding: 0 0.5rem;
+        gap: 0.5rem;
+      }
+      .carousel-item {
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 200px;
+        max-width: 100vw;
+        width: 100vw;
+      }
+      .carousel-text {
+        margin-right: 0;
+        min-width: 0;
+        max-width: 100vw;
+        border-radius: 14px 14px 0 0;
+        background: rgba(28,30,33,0.9);
+        padding: 1.2rem 1rem 1rem 1rem;
+        text-align: left;
+      }
+      .carousel-media {
+        width: 100%;
+        min-width: unset;
+        height: 240px;
+        border-radius: 0 0 14px 14px;
+        object-fit: contain;
+        max-width: 100vw;
+      }
+      .carousel-arrow {
+        font-size: 2.4rem;
+        position: absolute;
+        top: 45%;
+        left: 10px;
+        right: 10px;
+        z-index: 11;
+      }
+      .carousel-arrow.left {
+        left: 8px;
+        right: auto;
+      }
+      .carousel-arrow.right {
+        right: 8px;
+        left: auto;
+      }
+      .highlights-row {
+        flex-direction: column;
+        gap: 1.5rem;
+        padding: 0 0.5rem;
+      }
+      .flip-card {
+        width: 98vw;
+        min-width: 240px;
+        max-width: 410px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
 <body>
-<h1>Hello World</h1>
-<p>It ya boi kev.</p>
+  <nav class="navbar" aria-label="Primary Navigation">
+    <ul class="nav-links">
+      <li><a href="#about">ABOUT</a></li>
+      <li><a href="#work-experience">WORK EXPERIENCE</a></li>
+      <li><a href="#project-experience">PROJECT EXPERIENCE</a></li>
+      <li><a href="https://www.linkedin.com/in/kevinmay13/" target="_blank">LINKEDIN</a></li>
+      <li><a href="mailto:kevin.may@colorado.edu">EMAIL</a></li>
+    </ul>
+  </nav>
+
+  <section id="hero" class="hero-section">
+    <div class="hero-slideshow" id="heroSlideshow">
+      <img src="images/GRC-2022-C-04708.JPEG" alt="VIPER Mobility Testing" />
+      <img src="images/MDRS_Reggie.JPG" alt="MiSSE MDRS EVA" />
+      <img src="images/HIVE_Voss.jpg" alt="HIVE Mockup with Col. Voss" />
+    </div>
+    <div class="hero-content">
+      <div class="animate__animated animate__fadeInUp">
+        <h1>Kevin May</h1>
+        <h2>Engineering Portfolio</h2>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" class="highlights-row">
+    <div class="flip-card" data-aos="fade-up">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <i class="fa fa-graduation-cap"></i>
+          <h3>University of Colorado</h3>
+          <p>M.S. Bioastronautics</p>
+        </div>
+        <div class="flip-card-back">
+          <p>Class of 2025<br/><br/>4.0 GPA<br/><br/>Certificate in Satellite System Design</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-aos="fade-up">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <i class="fa fa-graduation-cap"></i>
+          <h3>University of Arizona</h3>
+          <p>B.S. Aerospace Engineering</p>
+        </div>
+        <div class="flip-card-back">
+          <p>Class of 2023<br/><br/>3.93 GPA<br/><br/>Minors in Planetary Sciences & Astronomy</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-aos="fade-up">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <i class="fa fa-rocket"></i>
+          <h3>NASA Experience</h3>
+          <p>VIPER Systems Engineering</p>
+        </div>
+        <div class="flip-card-back">
+          <p>Mission/Rover Systems Engineering Associate<br/><br/>May 2021 - June 2025<br/><br/>Fault Management, Testing, Simulation</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="flip-card" data-aos="fade-up">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <i class="fa fa-book"></i>
+          <h3>3</h3>
+          <p>Conference Publications</p>
+        </div>
+        <div class="flip-card-back">
+          <p>
+            <a href="https://doi.org/10.2514/6.2025-4100" target="_blank" rel="noopener noreferrer">ASCEND (2025)</a><br/><br/>
+            <a href="https://hdl.handle.net/2346/102690" target="_blank" rel="noopener noreferrer">ICES (2025)</a><br/><br/>
+            <a href="https://experts.azregents.edu/en/publications/simulation-and-evaluation-of-a-mechanical-hopping-mechanism-for-r" target="_blank" rel="noopener noreferrer">ASCEND (2021)</a>
+          </p>
+        </div>
+      </div>
+  </section>
+
+  <!-- WORK EXPERIENCE Section -->
+  <section id="work-experience" class="main-section">
+  <h1 class="section-header" data-aos="fade-up">WORK EXPERIENCE</h1>
+
+    <!-- Carousel 1 -->
+    <section id="work1" class="projects-section">
+      <div class="project-carousel">
+        <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+        <div class="carousel-item active">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>NASA VIPER</h2>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>MISSION</td>
+                  <td>Volatiles Investigating Polar Exploration Rover</td>
+                </tr>
+                <tr>
+                  <td>LOCATION</td>
+                  <td>NASA Ames Research Center</td>
+                </tr>
+                <tr>
+                  <td>ROLE</td>
+                  <td>Mission/Rover Systems Engineering Associate (Part-Time Contractor)</td>
+                </tr>
+                <tr>
+                  <td>EMPLOYER</td>
+                  <td>Astrion (formerly Axient)</td>
+                </tr>
+                <tr>
+                  <td>DATES</td>
+                  <td>May 2021 - Jun 2025</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <video
+            src="images/VIPER_animation.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            class="carousel-media"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Mobility Testing</h2>
+            <ul>
+              <li>Mobility verification and validation testing with the engineering test unit MGRU (Moon Gravity Representative Unit)</li><br/>
+              <li>Led the environment preparation at the NASA Glenn SLOPE Lab</li><br/>
+                <ul>
+                  <li>Developed Python tools to randomly generate simulated lunar terrains (rocks and crater sizes, shapes, locations)</li><br/>
+                  <li>Developed test procedures for environment preparation</li><br/>
+                  <li>Executed procedures during testing</li>
+                </ul>
+            </ul>
+            <h3><a href="https://www.nasa.gov/missions/artemis/nasas-viper-prototype-motors-through-moon-like-obstacle-course/" target="_blank" rel="noopener noreferrer">NASA Feature Article/Interview</a></h3>
+          </div>
+          <img
+            src="images/SLOPE_pics_stitched.png"
+            alt=""
+            class="carousel-media"
+          />
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Fault Management</h2>
+            <ul>
+              <li>Collaborated with multidisciplinary VIPER engineers to develop, document, and verify detailed fault management information</li><br/>
+              <li>Developed a rover fault analysis model in the MBSE tool QSI TEAMS-Designer to analyze failure modes, assess failure effects and diagnostic procedures, and conduct testability analyses across rover subsystems</li><br/>
+              <li>Produced detailed subsystem-level fault diagnosing trees and anomaly response procedures for flight operations</li>
+            </ul>
+            <p><a href="https://llis.nasa.gov/lesson/757" target="_blank" rel="noopener noreferrer">Image Source (NASA)</a></p>
+          </div>
+          <img
+            src="images/fault_tree.jpg"
+            alt=""
+            class="carousel-media"
+          />
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Navigation Testing</h2>
+            <ul>
+              <li>Navigation testing with the engineering test unit MGRU (Moon Gravity Representative Unit)</li><br/>
+              <li>Led the environment preparation at the NASA Ames Roverscape</li><br/>
+              <li>Designed and implemented a ground truth rover pose measurement system for testing</li><br/>
+                <ul>
+                  <li>Hardware: HTC VIVE Trackers, Leica Total Station, FARO Laser Scanner, custom 3D printed mounts (modeled in SolidWorks)</li><br/>
+                  <li>Software: Open-source packages, custom Python scripts</li>
+                </ul>
+            </ul>
+          </div>
+          <img
+            src="images/MGRU_trackers_nav.png"
+            alt=""
+            class="carousel-media"
+          />
+        </div>
+
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Simulation</h2>
+            <ul>
+              <li>Developed a simple rover model in Webots with a C-based controller to simulate kinematics</li><br/>
+              <li>Analyzed traversability of terrain features based on clearance requirements</li>
+            </ul>
+          </div>
+          <video
+            src="images/VIPER_crater_sim_16x.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            class="carousel-media"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+
+        <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+      </div>
+      <div class="carousel-indicators"></div>
+    </section>
+
+    <!-- ADDITIONAL EXPERIENCES dropdown -->
+    <div class="additional-experiences">
+      <button class="dropdown-toggle">ADDITIONAL EXPERIENCES ▼</button>
+      <div class="dropdown-content">
+        <section id="work2" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Hopping Robot Simulation</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>RESEARCH LAB</td>
+                      <td>University of Arizona ASTEROIDS Lab</td>
+                    </tr>
+                    <tr>
+                      <td>FUNDING</td>
+                      <td>Arizona/NASA Space Grant</td>
+                    </tr>
+                    <tr>
+                      <td>POSITION</td>
+                      <td>Undergraduate Research Intern</td>
+                    </tr>
+                    <tr>
+                      <td>ADVISOR</td>
+                      <td>Dr. Jekan Thanga</td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td>Jul 2020 - May 2021</td>
+                    </tr>
+                    <tr>
+                      <td>PUBLICATION</td>
+                      <td><a href="https://experts.azregents.edu/en/publications/simulation-and-evaluation-of-a-mechanical-hopping-mechanism-for-r" target="_blank" rel="noopener noreferrer">ASCEND (2021)</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <video
+                src="images/ASTEROIDS_hop_test.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li>Designed and controlled a custom hopping robot in Webots with a C-based controller to simulate navigation in low-gravity environments (e.g., Bennu, Phobos)</li><br/>
+                  <li>Applied global-cumulative size-frequency distribution data of boulders on the asteroid Bennu to model a local surface chunk as a simulation environment</li><br/>
+                  <li>Generated simulated regolith beds in the N-body Linux tool PKDGRAV for numerical modeling of granular contact dynamics between robot mechanisms and regolith in low gravity</li><br/>
+                  <li>Presented results at the 2021 Interplanetary Small Satellite Conference (ISSC) and the 2021 AIAA ASCEND Conference</li>
+                </ul>
+              </div>
+              <img
+                src="images/ASTEROIDS_bennu_surface_chunk.png"
+                alt="Simulated Bennu Surface"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item media-only">
+              
+              <img
+                src="images/ASTEROIDS_pkdgrav_shell.gif"
+                alt="Surface Particles pkdgrav Simulation"
+                class="carousel-media"
+              />
+            </div>
+
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT EXPERIENCE Section -->
+  <section id="project-experience" class="main-section">
+    <h1 class="section-header">PROJECT EXPERIENCE</h1>
+    <section id="project1" class="projects-section">
+      <div class="project-carousel">
+        <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+        <div class="carousel-item active">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Lunar Habitat Design</h2>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>PROJECT</td>
+                  <td>Human Spaceflight Graduate Project</td>
+                </tr>
+                <tr>
+                  <td>ASSOCIATION</td>
+                  <td>CU Boulder</td>
+                </tr>
+                <tr>
+                  <td>ROLE</td>
+                  <td>Structures Lead</td>
+                </tr>
+                <tr>
+                  <td>ADVISOR</td>
+                  <td>Col. James Voss (Former NASA Astronaut)</td>
+                </tr>
+                <tr>
+                  <td>SPONSOR</td>
+                  <td>Boeing Exploration Systems</td>
+                </tr>
+                <tr>
+                  <td>DATES</td>
+                  <td>Fall 2024</td>
+                </tr>
+                <tr>
+                  <td>PUBLICATION</td>
+                  <td><a href="https://hdl.handle.net/2346/102690" target="_blank" rel="noopener noreferrer">ICES (2025)</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <video
+            src="images/IgLOO_Stowed_Rotation.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            class="carousel-media"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Design Overview</h2>
+            <p>
+              This "Class I" conceptual habitat design is pre-integrated and self-sustaining to support near-term surface exploration with minimal reliance on existing infrastructure. The design emphasizes reconfigurability, crew well-being, and operational efficiency.
+            </p>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>LOCATION</td>
+                  <td>Lunar South Pole</td>
+                </tr>
+                <tr>
+                  <td>CREW SIZE</td>
+                  <td>4</td>
+                </tr>
+                <tr>
+                  <td>DURATION</td>
+                  <td>30 days</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <img
+            src="images/HIVE_Ext_Deployed_Space_Background.png"
+            alt="Deployed Habitat on the Lunar Surface"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Responsibilities</h2>
+            <ul>
+              <li>Defined structural requirements</li><br/>
+              <li>Conducted trade studies on metallic and composite materials (Al 2195-T8 selected) and pressure vessel head shapes (semi-elliptical selected)</li><br/>
+              <li>Performed first-principles structural analyses to design for launch and pressure loads</li>
+                <ul>
+                  <li>NASA-STD-5001 FoS</li><br/>
+                </ul>
+              <li>Modeled habitat structures in SolidWorks and created engineering drawings</li>
+                <ul>
+                  <li>Orthogrid-stiffened pressure vessel, micrometeoroid shielding, truss support structures, windows, window covers, internal structures</li><br/>
+                </ul>
+              <li>Assembled integrated structures, subsystems, crew cabin layout, and EVA equipment in SolidWorks</li>
+              <!-- Add more items as needed -->
+            </ul>
+            <h3>Total Hours Worked: 418 (28/week)</h3>
+          </div>
+          <img
+            src="images/Hab_Orthogrid.png"
+            alt="Primary Orthogrid Structure"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Design Parameters</h2>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>LAUNCH MASS</td>
+                  <td>13,507 kg</td>
+                </tr>
+                <tr>
+                  <td>STOWED DIAMETER</td>
+                  <td>6.17 m</td>
+                </tr>
+                <tr>
+                  <td>STOWED LENGTH</td>
+                  <td>8.48 m</td>
+                </tr>
+                <tr>
+                  <td>PRESSURIZED VOLUME</td>
+                  <td>83 m<sup>3</sup></td>
+                </tr>
+                <tr>
+                  <td>HABITABLE VOLUME</td>
+                  <td>32 m<sup>3</sup></td>
+                </tr>
+                <tr>
+                  <td>PEAK POWER</td>
+                  <td>28.9 kW</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <video
+            src="images/IgLOO_Deployed_Rotation_v1_Motion Study.mp4"
+            autoplay
+            loop
+            muted
+            playsinline
+            class="carousel-media"
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Ext_Stowed_Tech.png"
+            alt="External Habitat Technologies (Stowed)"
+            class="carousel-media contain-fit"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Ext_Deployed_Tech.png"
+            alt="External Habitat Technologies (Deployed)"
+            class="carousel-media contain-fit"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Tech_Section_Views.png"
+            alt="Internal Habitat Technologies"
+            class="carousel-media white-bg"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Port_Layout.png"
+            alt="Crew Cabin Port Layout"
+            class="carousel-media white-bg"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Starboard_Layout.png"
+            alt="Crew Cabin Starboard Layout"
+            class="carousel-media white-bg"
+          />
+        </div>
+  
+        <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+      </div>
+      <div class="carousel-indicators"></div>
+    </section>
+  
+    <section id="project2" class="projects-section">
+      <div class="project-carousel">
+        <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+        <div class="carousel-item active">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Habitat Mockup & Human Factors Testing</h2>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>PROJECT</td>
+                  <td>Human Spaceflight Graduate Project</td>
+                </tr>
+                <tr>
+                  <td>ASSOCIATION</td>
+                  <td>CU Boulder</td>
+                </tr>
+                <tr>
+                  <td>ROLE</td>
+                  <td>Technical Director & Build Lead</td>
+                </tr>
+                <tr>
+                  <td>ADVISOR</td>
+                  <td>Col. James Voss (Former NASA Astronaut)</td>
+                </tr>
+                <tr>
+                  <td>SPONSOR</td>
+                  <td>Boeing Exploration Systems</td>
+                </tr>
+                <tr>
+                  <td>DATES</td>
+                  <td>Spring 2025</td>
+                </tr>
+                <tr>
+                  <td>PUBLICATION</td>
+                  <td><a href="https://doi.org/10.2514/6.2025-4100" target="_blank" rel="noopener noreferrer">ASCEND (2025)</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <img
+            src="images/HIVE_Mockup.jpg"
+            alt="HIVE Habitat Mockup"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Design Overview</h2>
+            <p>
+              This full-scale, medium-to-high-fidelity mockup was constructed based on our conceptual lunar habitat design. It was used to conduct comprehensive, day-in-the-life human factors testing to evaluate the design's habitability and usability.
+            </p>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>INTERNAL WALKWAY DIMENSIONS</td>
+                  <td>W7' x L17' x H8' (full scale)</td>
+                </tr>
+                <tr>
+                  <td>EXTERNAL DIAMETER</td>
+                  <td>12'10" (~23" smaller than concept)</td>
+                </tr>
+                <tr>
+                  <td>BUILD TIME</td>
+                  <td>3.5 months</td>
+                </tr>
+                <tr>
+                  <td>BUILD BUDGET</td>
+                  <td>$12,000</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <img
+            src="images/Mockup_Dim.png"
+            alt="Mockup Dimensions"
+            class="carousel-media contain-fit"
+          />
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Responsibilities</h2>
+            <ul>
+              <li>Led the design, fabrication, assembly, and qualification/safety testing of the mockup</li><br/>
+              <li>Conducted technical interchange meetings, design reviews, and test readiness reviews with project advisors and Boeing</li><br/>
+              <li>Participated in pilot testing and coordinated some human factors test sessions</li>
+            </ul>
+            <h3>Total Hours Worked: 472 (31/week)</h3>
+          </div>
+          <img
+            src="images/Mockup_Integration.png"
+            alt="Mockup Integration Phase"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item">
+          <div class="carousel-text" data-aos="fade-up">
+            <h2>Human Factors Testing</h2>
+            <p>
+              Human factors testing was conducted in the mockup to evaluate the acceptability of the layout, volume, reconfigurability, emergency radiation shelter use, and cargo transfer logistics.
+            </p>
+            <table class="carousel-data">
+              <tbody>
+                <tr>
+                  <td>TEST PARTICIPANTS</td>
+                  <td>47</td>
+                </tr>
+                <tr>
+                  <td>"CREW" SIZE</td>
+                  <td>4</td>
+                </tr>
+                <tr>
+                  <td>TEST DURATION</td>
+                  <td>2 hours</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <img
+            src="images/Overall_Volume_Likert.png"
+            alt="Likert Data: Overall Volume Acceptability"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Mockup_Ext_Aft.png"
+            alt="Mockup External Aft View"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Mockup_Ext_Fwd.png"
+            alt="Mockup External Forward View"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Mockup_Int_Port.png"
+            alt="Mockup Internal Port View"
+            class="carousel-media"
+          />
+        </div>
+  
+        <div class="carousel-item media-only">
+          <img
+            src="images/Mockup_Int_SB.png"
+            alt="Mockup Internal Starboard View"
+            class="carousel-media"
+          />
+        </div>
+  
+        <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+      </div>
+      <div class="carousel-indicators"></div>
+    </section>
+
+    <!-- ADDITIONAL EXPERIENCES dropdown -->
+    <div class="additional-experiences">
+      <button class="dropdown-toggle">ADDITIONAL EXPERIENCES ▼</button>
+      <div class="dropdown-content">
+        
+        <section id="project3" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>ESPA Grande Spacecraft Design</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>PROJECT</td>
+                      <td>Spacecraft Design (Class) Project</td>
+                    </tr>
+                    <tr>
+                      <td>ASSOCIATION</td>
+                      <td>CU Boulder</td>
+                    </tr>
+                    <tr>
+                      <td>ROLE</td>
+                      <td>Systems Engineering Lead</td>
+                    </tr>
+                    <tr>
+                      <td>ADVISOR</td>
+                      <td>Dr. Christopher Grasso (Blue Sun Enterprises)</td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td>Spring 2024</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/Elysium_Separation.PNG"
+                alt="Elysium Separation CAD"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Design Overview</h2>
+                <p>
+                  This spacecraft design is intended to demonstrate In-space Servicing, Assembly, and Manufacturing (ISAM) and return the Spitzer Space Telescope to operability to conduct cross-link planetary defense operations.
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>LAUNCH MASS</td>
+                      <td>421 kg</td>
+                    </tr>
+                    <tr>
+                      <td>STOWED DIMENSIONS</td>
+                      <td>64" x 45" x 42"</td>
+                    </tr>
+                    <tr>
+                      <td>LAUNCH INTERFACE</td>
+                      <td>ESPA Grande</td>
+                    </tr>
+                    <tr>
+                      <td>PROPULSION</td>
+                      <td>Solar Electric</td>
+                    </tr>
+                    <tr>
+                      <td>SECONDARY PAYLOAD</td>
+                      <td>3U CubeSat</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/Elysium_Deployed.PNG"
+                alt="Deployed Elysium CAD"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li>Led the conceptual system design</li><br/>
+                  <li>Defined functional requirements (decomposition from L0 to L4)</li><br/>
+                  <li>Conducted system-level trade studies</li><br/>
+                  <li>Assessed mission-level risks</li><br/>
+                  <li>Assigned tasks to subsystem leads</li><br/>
+                  <li>Managed the Master Equipment List (MEL)</li><br/>
+                  <li>Tracked system performance metrics (mass, power) by subsystem and flight mode</li><br/>
+                  <li>Developed and maintained the integrated system block diagram, including power, data, and propellant flow interfaces</li>
+                </ul>
+              </div>
+              <img
+                src="images/Elysium_logo.png"
+                alt="Elysium Logo"
+                class="carousel-media"
+              />
+            </div>
+
+            <div class="carousel-item media-only">
+              <img
+                src="images/Elysium_SBD.png"
+                alt="Elysium System Block Diagram"
+                class="carousel-media contain-fit white-bg"
+              />
+            </div>
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+
+        <section id="project4" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Space Medicine & EVA Operations</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>PROJECT</td>
+                      <td>Analog Extravehicular Activity Project</td>
+                    </tr>
+                    <tr>
+                      <td>ASSOCIATION</td>
+                      <td>CU Boulder Medicine in Space and Surface Environments</td>
+                    </tr>
+                    <tr>
+                      <td>ROLE</td>
+                      <td>Payload Housing Design Lead, Analog Astronaut</td>
+                    </tr>
+                    <tr>
+                      <td>ADVISOR</td>
+                      <td>Dr. Katya Arquilla</td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td>Spring 2025</td>
+                    </tr>
+                    <tr>
+                      <td>FEATURE ARTICLE</td>
+                      <td><a href="https://www.9news.com/article/news/local/next/next-with-kyle-clark/university-colorado-students-simulate-mars-space-medicine-program/73-3e630f66-87fd-4c43-9885-60630e8ce8f7" target="_blank" rel="noopener noreferrer">9NEWS (2025)</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/MDRS_Reggie.JPG"
+                alt="EVA Controlling Reggie"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Analog Mission Overview</h2>
+                <p>
+                  This project focused on applying space medicine concepts in the field by responding to simulated emergencies during extravehicular activities (EVA). The experience was led by CU Bioastronautics and Emergency Medicine faculty.
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>LOCATION</td>
+                      <td>Mars Desert Research Station</td>
+                    </tr>
+                    <tr>
+                      <td>DURATION</td>
+                      <td>1 week</td>
+                    </tr>
+                    <tr>
+                      <td>EVA FREQ.</td>
+                      <td>Daily</td>
+                    </tr>
+                    <tr>
+                      <td>EVA OBJECTIVES</td>
+                      <td>Satellite Recovery, Comm Relay, Site Scouting, Search & Rescue, Geology</td>
+                    </tr>
+                    <tr>
+                      <td>MEDICAL SITUATIONS</td>
+                      <td>Musculoskeletal, DCS, Radiation, TBI, Mass Casualty</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/MDRS_Team.jpg"
+                alt="MiSSE Team at MDRS"
+                class="carousel-media"
+              />
+            </div>
+
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Payload Design Overview</h2>
+                <p>
+                  This payload is designed to house medical supplies to respond to musculoskeletal injuries during EVA. It attaches to a dog-like robotic teammate ("Reggie") to reduce crew operational load.
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>MASS (UNLOADED)</td>
+                      <td>1.7 kg kg</td>
+                    </tr>
+                    <tr>
+                      <td>MASS (LOADED)</td>
+                      <td>3.7 kg</td>
+                    </tr>
+                    <tr>
+                      <td>DIMENSIONS</td>
+                      <td>0.35 x 0.26 x 0.24 m</td>
+                    </tr>
+                    <tr>
+                      <td>MATERIAL</td>
+                      <td>3D Printed PETG</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/Reg_payload_cad_deployed.png"
+                alt="CAD Model of Payload on Reggie"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <h3>Medical Payload:</h3>
+                    <ul>
+                      <li>Designed the housing (SolidWorks)</li>
+                      <li>Manufactured the housing (3D print)</li>
+                      <li>Tested operations of Reggie with payload</li>
+                    </ul>
+                  <h3>Main EVA Roles:</h3>
+                    <ul>
+                      <li><b>Primary:</b> Robot (Reggie) Operator, Rover Driver</li>
+                      <li><b>Secondary:</b> Medical Lead</li>
+                    </ul>
+                  <h3>Other EVA Roles:</h3>
+                    <ul>
+                      <li>Geologist, Comm Lead, Medical Lead, Nav Lead</li>
+                    </ul>
+              </div>
+              <img
+                src="images/Reg_payload_cad_labeled.png"
+                alt="Labeled CAD Model"
+                class="carousel-media"
+              />
+            </div>
+  
+            <div class="carousel-item media-only">
+              <img
+                src="images/MDRS_conops.png"
+                alt="Reggie Conops"
+                class="carousel-media"
+              />
+            </div>
+            <div class="carousel-item media-only">
+              <img
+                src="images/MDRS_med.jpg"
+                alt="EVA Medical Care"
+                class="carousel-media"
+              />
+            </div>
+            <div class="carousel-item media-only">
+              <img
+                src="images/MDRS_sked.jpg"
+                alt="SKED Evacuation"
+                class="carousel-media"
+              />
+            </div>
+            <div class="carousel-item media-only">
+              <img
+                src="images/MDRS_Ultrasound.jpg"
+                alt="Portable Ultrasound"
+                class="carousel-media"
+              />
+            </div>
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+
+        <section id="project5" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Lunar Surface Equipment Transporter</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>PROJECT</td>
+                      <td>Aerospace Senior Design Project</td>
+                    </tr>
+                    <tr>
+                      <td>ASSOCIATION</td>
+                      <td>University of Arizona</td>
+                    </tr>
+                    <tr>
+                      <td>ROLE</td>
+                      <td>Team Lead, Systems Engineering Lead</td>
+                    </tr>
+                    <tr>
+                      <td>ADVISORS</td>
+                      <td>Dr. Jekan Thanga, Dr. Sergey Shkarayev</td>
+                    </tr>
+                    <tr>
+                      <td>SPONSOR</td>
+                      <td>NASA</td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td>Aug 2022 - May 2023</td>
+                    </tr>
+                    <tr>
+                      <td>PROJECT VIDEO</td>
+                      <td><a href=https://www.youtube.com/watch?v=iq_1hRnXfNQ" target="_blank" rel="noopener noreferrer">YouTube</a></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <video
+                src="images/LETO_Drone_Fade.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Conceptual Design Overview</h2>
+                <p>
+                  This vehicle is designed to load, transport, and deploy large and heavy cargo on the lunar surface. It utilizes NASA's Lightweight Surface Manipulation System and a scissor-hinge mechanism to load cargo of various sizes.
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>VEHICLE MASS</td>
+                      <td>70,000 kg</td>
+                    </tr>
+                    <tr>
+                      <td>VEHICLE LENGTH</td>
+                      <td>5 m (stowed), 11 m (max deployed)</td>
+                    </tr>
+                    <tr>
+                      <td>MAX CARGO MASS</td>
+                      <td>15,000 kg</td>
+                    </tr>
+                    <tr>
+                      <td>MAX CARGO DIMENSIONS</td>
+                      <td>4.6 m diameter x 7.8 m length</td>
+                    </tr>
+                    <tr>
+                      <td>TRANSPORTATION DISTANCE</td>
+                      <td>1 km</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <video
+                src="images/LETO_Render.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Prototype Overview</h2>
+                <p>
+                  The scaled-down (1:5.5), simplified prototype vehicle was used to test the dynamic functionality of the design. The cargo payload was scaled down based on density and lunar gravity (including a 1.4 FoS).
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>SCALED VEHICLE MASS</td>
+                      <td>64 kg</td>
+                    </tr>
+                    <tr>
+                      <td>SCALED VEHICLE LENGTH</td>
+                      <td>2 m</td>
+                    </tr>
+                    <tr>
+                      <td>SCALED MAX CARGO MASS</td>
+                      <td>15 kg</td>
+                    </tr>
+                    <tr>
+                      <td>SCALED MAX CARGO DIMENSIONS</td>
+                      <td>0.83 m diameter x 1.4 m length</td>
+                    </tr>
+                    <tr>
+                      <td>BUILD BUDGET</td>
+                      <td>$3,000</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <video
+                src="images/LETO_CAD_Prototype.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li>Defined conceptual mission specifications and system requirements</li><br/>
+                  <li>Made system-level design decisions for concept and prototype</li><br/>
+                  <li>Managed schedule (Gantt) and communications with sponsors and mentors</li><br/>
+                  <li>Managed mass/volume/power budgets for conceptual design</li><br/>
+                  <li>Managed cost budget and bill of materials for prototype</li><br/>
+                  <li>Modeled and assembled conceptual design and prototype crane subassembly in SolidWorks</li><br/>
+                  <li>Led system-level testing and validated system requirements</li><br/>
+                  <li>Created project video</li>
+                </ul>
+              </div>
+              <video
+                src="images/LETO_CAD_Concept.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <div class="carousel-item media-only">
+              <video
+                src="images/LETO_Max_Volume_Test.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+
+        <section id="project6" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>High-Altitude Balloon Payloads</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>PROJECT</td>
+                      <td>Arizona/NASA Space Grant's ASCEND</td>
+                    </tr>
+                    <tr>
+                      <td>TEAM</td>
+                      <td>Arizona Students for the Exploration and Development of Space (SEDS)</td>
+                    </tr>
+                    <tr>
+                      <td>ROLE</td>
+                      <td>Mechanical Team Lead</td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td>Aug 2019 - Apr 2021</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/ASCEND_payload_launch.jpeg"
+                alt="ASCEND Payload Pre-Launch"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Project Overview</h2>
+                <p>
+                  ASCEND is a design-build-fly-operate-analyze project for small payloads launched from high-altitude weather balloons, which the UArizona SEDS club participated in every year.
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>LAUNCH FREQUENCY</td>
+                      <td>2/year</td>
+                    </tr>
+                    <tr>
+                      <td>LAUNCH LOCATION</td>
+                      <td>Maricopa, AZ</td>
+                    </tr>
+                    <tr>
+                      <td>PEAK ALTITUDE</td>
+                      <td>~100,000 ft (30 km)</td>
+                    </tr>
+                    <tr>
+                      <td>PROJECT SPONSOR</td>
+                      <td>Arizona/NASA Space Grant</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <video
+                src="images/ASCEND_launch.mp4"
+                autoplay
+                loop
+                muted
+                playsinline
+                class="carousel-media"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Design Overview</h2>
+                <p>
+                  The final payload I developed as Mechanical Team Lead was our most compact design yet, fitting all components within the size of a 1U standard CubeSat.
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>DIMENSIONS</td>
+                      <td>10 x 10 x 10 cm</td>
+                    </tr>
+                    <tr>
+                      <td>MATERIAL</td>
+                      <td>3D Printed PLA</td>
+                    </tr>
+                    <tr>
+                      <td>INSTRUMENTS</td>
+                      <td>Pocket Geiger, Temperature / Humidity / Pressure Sensor, GoPro Camera</td>
+                    </tr>
+                    <tr>
+                      <td>ELECTRONICS</td>
+                      <td>Microcontroller, Accelerometer, MicroSD, LiPo Batteries, DC/DC Converter, Status LED</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/ASCEND_payload_open.png"
+                alt="ASCEND Payload Showing Components"
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li>Designed payload housings in SolidWorks based on project requirements and component selection</li><br/>
+                  <li>3D printed and assembled payload housings</li><br/>
+                  <li>Drop tested payload housings</li><br/>
+                  <li>Participated in payload launches</li><br/>
+                  <li>Presented results at the annual Arizona/NASA Space Grant Symposium</li>
+                </ul>
+              </div>
+              <img
+                src="images/ASCEND_housing_asm_cad.PNG"
+                alt="CAD of ASCEND Payload"
+                class="carousel-media"
+              />
+            </div>
+  
+            <div class="carousel-item media-only">
+              <img
+                src="images/ASCEND_data.png"
+                alt=""
+                class="carousel-media contain-fit white-bg"
+              />
+            </div>
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+
+        <section id="project7" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>HOAV?</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>PROJECT</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>ASSOCIATION</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>ROLE</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>ADVISOR</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Design Overview</h2>
+                <p>
+                  This 
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li></li><br/>
+                  <li></li><br/>
+                  <li></li><br/>
+                  <li></li>
+                </ul>
+              </div>
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media"
+              />
+            </div>
+  
+            <div class="carousel-item media-only">
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media contain-fit white-bg"
+              />
+            </div>
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+
+        <section id="projectx" class="projects-section">
+          <div class="project-carousel">
+            <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
+            <div class="carousel-item active">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Title</h2>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td>PROJECT</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>ASSOCIATION</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>ROLE</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>ADVISOR</td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td>DATES</td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Design Overview</h2>
+                <p>
+                  This 
+                </p>
+                <table class="carousel-data">
+                  <tbody>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                    <tr>
+                      <td></td>
+                      <td></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media"
+              />
+            </div>
+      
+            <div class="carousel-item">
+              <div class="carousel-text" data-aos="fade-up">
+                <h2>Responsibilities</h2>
+                <ul>
+                  <li></li><br/>
+                  <li></li><br/>
+                  <li></li><br/>
+                  <li></li>
+                </ul>
+              </div>
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media"
+              />
+            </div>
+  
+            <div class="carousel-item media-only">
+              <img
+                src="images/"
+                alt=""
+                class="carousel-media contain-fit white-bg"
+              />
+            </div>
+            <button class="carousel-arrow right" aria-label="Next Slide">&#8594;</button>
+          </div>
+          <div class="carousel-indicators"></div>      
+        </section>
+
+        <!-- Add more -->
+      </div>
+    </div>
+  </div>
+  
+  <footer class="footer">
+    <div>© 2025 Kevin May. All rights reserved.</div>
+  </footer>
+
+  <!-- JS LIBRARIES & SCRIPTS BELOW -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  
+  <script>
+    AOS.init({
+      duration: 900, // ms, slow enough to be noticeable
+      once: true,
+      offset: 120,   // trigger before element fully enters viewport
+    });
+  </script>
+
+  <script>
+    document.querySelectorAll('.project-carousel').forEach((carousel) => {
+      const items = carousel.querySelectorAll('.carousel-item');
+      let currentIndex = 0;
+
+      // Create indicator container and buttons dynamically
+      const indicatorsContainer = carousel.parentElement.querySelector('.carousel-indicators');      if (indicatorsContainer) {
+        for (let i = 0; i < items.length; i++) {
+          const dot = document.createElement('button');
+          if (i === 0) dot.classList.add('active');
+          dot.setAttribute('data-index', i);
+          indicatorsContainer.appendChild(dot);
+
+          dot.addEventListener('click', () => {
+            currentIndex = i;
+            showItem(currentIndex);
+          });
+        }
+      }
+
+      const showItem = (index) => {
+        items.forEach((item, i) => {
+          item.classList.toggle('active', i === index);
+        });
+        // Update dots active state
+        if (indicatorsContainer) {
+          indicatorsContainer.querySelectorAll('button').forEach((dot, i) => {
+            dot.classList.toggle('active', i === index);
+          });
+        }
+      };
+
+      carousel.querySelector('.carousel-arrow.left').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + items.length) % items.length;
+        showItem(currentIndex);
+      });
+
+      carousel.querySelector('.carousel-arrow.right').addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % items.length;
+        showItem(currentIndex);
+      });
+
+      // Initialize carousel display
+      showItem(currentIndex);
+    });
+  </script>
+
+  <script>
+    const slideshow = document.getElementById('heroSlideshow');
+    const slidesCount = slideshow.children.length;
+    let slideIndex = 0;
+    function showNextSlide() {
+      slideIndex = (slideIndex + 1) % slidesCount;
+      slideshow.style.transform = `translateX(-${slideIndex * 100}vw)`;
+    }
+    setInterval(showNextSlide, 5000);
+  </script>
+
+  <script>
+    document.querySelectorAll('.additional-experiences').forEach((container) => {
+      const toggleButton = container.querySelector('.dropdown-toggle');
+      const dropdownContent = container.querySelector('.dropdown-content');
+
+      toggleButton.addEventListener('click', () => {
+        dropdownContent.classList.toggle('active');
+
+        // Optional: change arrow direction
+        if(dropdownContent.classList.contains('active')){
+          toggleButton.textContent = 'ADDITIONAL EXPERIENCES ▲';
+        } else {
+          toggleButton.textContent = 'ADDITIONAL EXPERIENCES ▼';
+        }
+      });
+    });
+  </script>
+  
+  <script>
+    let lastScrollTop = 0;
+    const navbar = document.querySelector('nav.navbar');
+
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      if (scrollTop > lastScrollTop) {
+        // Scroll down
+        navbar.classList.add('hidden');
+      } else {
+        // Scroll up
+        navbar.classList.remove('hidden');
+      }
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+    });
+  </script>
 </body>
 </html>
