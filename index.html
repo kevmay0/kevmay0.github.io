@@ -1,22 +1,18 @@
 <!DOCTYPE html>
 <!--
   -- Kevin May
-  -- @version 1.0
-  -- @date 24.07.2025
-  -- @url https://
+  -- @version 1.9
+  -- @date 13.08.2025
+  -- @url https://kevmay0.github.io/ 
 -->
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kevin May – Portfolio</title>
-  <!-- Animate.css for entrance animations -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-  <!-- FontAwesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Google Fonts for font style -->
   <link href="https://fonts.googleapis.com/css?family=Helvetica:400,700&display=swap" rel="stylesheet">
-  <!-- AOS CSS for scroll animations -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet"/>
 
   <style>
@@ -45,7 +41,7 @@
       display: flex;
       justify-content: center;
       background: rgba(22, 24, 26, 0.2);
-      backdrop-filter: saturate(180%) blur(10px); /* glass effect */
+      backdrop-filter: saturate(180%) blur(10px);
       -webkit-backdrop-filter: saturate(180%) blur(10px); /* for Safari */
       padding: 1rem 0;
       z-index: 10;
@@ -74,7 +70,7 @@
       padding-bottom: 4px;
       transition: color 0.3s ease;
     }
-    nav.navbar ul.nav-links li a::after { /* Animated underline effect */
+    nav.navbar ul.nav-links li a::after {
       content: '';
       position: absolute;
       width: 0;
@@ -102,14 +98,13 @@
     }
     .hero-slideshow {
       display: flex;
-      width: 300%; /* for 3 images */
+      width: 300%;
       height: 100%;
       transition: transform 1s ease-in-out;
     }
     .hero-slideshow img {
       width: 100vw;
       height: 100%;
-      /* object-fit: contain; /* scales image to fit within container without cropping */
       object-fit: cover;
       flex-shrink: 0;
       user-select: none;
@@ -257,7 +252,7 @@
       color: #fff;
       border-radius: 14px 0 0 14px;
       z-index: 2;
-      margin-right: -70px;              /* adjust for overlay look as needed */
+      margin-right: -70px;
       position: relative;
       display: flex;
       flex-direction: column;
@@ -312,7 +307,7 @@
       min-width: 380px;
       max-width: 700px;
       width: auto;
-      object-fit: cover;        /* 'contain' for no crop */
+      object-fit: cover;
       border-radius: 0 14px 14px 0;
       z-index: 1;
       background: #1c1e21;
@@ -324,12 +319,12 @@
       background: #fff;
     }
     .carousel-item.media-only .carousel-media {
-      max-width: 100%;               /* or 1000px if your carousel is 1000px wide */
+      max-width: 100%;
       width: 100%;
-      border-radius: 14px;           /* 14px all around for aesthetic consistency */
-      min-width: 0;                  /* reset min-width if needed */
-      margin: 0 auto;                /* center if needed */
-      object-fit: contain;           /* (optional) or keep cover */
+      border-radius: 14px;
+      min-width: 0;
+      margin: 0 auto;
+      object-fit: contain;
       display: block;
     }
     .carousel-arrow {
@@ -360,7 +355,7 @@
       transition: background 0.3s ease;
     }
     .carousel-indicators button.active {
-      background: #fff; /* highlight color */
+      background: #fff;
     }
 
     .additional-experiences {
@@ -404,8 +399,8 @@
     .dropdown-content .project-carousel {
       margin: 0 auto;
       width: 100%;
-      max-width: 1000px; /* keep consistent max width */
-      justify-content: center; /* flex centering */
+      max-width: 1000px;
+      justify-content: center;
     }
     .dropdown-content.active {
       max-height: 3000px;
@@ -585,11 +580,9 @@
       </div>
   </section>
 
-  <!-- WORK EXPERIENCE Section -->
   <section id="work-experience" class="main-section">
   <h1 class="section-header" data-aos="fade-up">WORK EXPERIENCE</h1>
 
-    <!-- Carousel 1 -->
     <section id="work1" class="projects-section">
       <div class="project-carousel">
         <button class="carousel-arrow left" aria-label="Previous Slide">&#8592;</button>
@@ -716,7 +709,6 @@
       <div class="carousel-indicators"></div>
     </section>
 
-    <!-- ADDITIONAL EXPERIENCES dropdown -->
     <div class="additional-experiences">
       <button class="dropdown-toggle">ADDITIONAL EXPERIENCES ▼</button>
       <div class="dropdown-content">
@@ -801,7 +793,6 @@
     </div>
   </section>
 
-  <!-- PROJECT EXPERIENCE Section -->
   <section id="project-experience" class="main-section">
     <h1 class="section-header">PROJECT EXPERIENCE</h1>
     <section id="project1" class="projects-section">
@@ -900,7 +891,7 @@
                   <li>Orthogrid-stiffened pressure vessel, micrometeoroid shielding, truss support structures, windows, window covers, internal structures</li><br/>
                 </ul>
               <li>Assembled integrated structures, subsystems, crew cabin layout, and EVA equipment in SolidWorks</li>
-              <!-- Add more items as needed -->
+
             </ul>
             <h3>Total Hours Worked: 418 (28/week)</h3>
           </div>
@@ -1107,7 +1098,7 @@
               <tbody>
                 <tr>
                   <td>TEST PARTICIPANTS</td>
-                  <td>46</td>
+                  <td>47</td>
                 </tr>
                 <tr>
                   <td>"CREW" SIZE</td>
@@ -1164,7 +1155,6 @@
       <div class="carousel-indicators"></div>
     </section>
 
-    <!-- ADDITIONAL EXPERIENCES dropdown -->
     <div class="additional-experiences">
       <button class="dropdown-toggle">ADDITIONAL EXPERIENCES ▼</button>
       <div class="dropdown-content">
@@ -1768,8 +1758,6 @@
           <div class="carousel-indicators"></div>      
         </section>
 
-
-        <!-- Add more -->
       </div>
     </div>
   </div>
@@ -1778,14 +1766,14 @@
     <div>© 2025 Kevin May. All rights reserved.</div>
   </footer>
 
-  <!-- JS LIBRARIES & SCRIPTS BELOW -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
   
   <script>
     AOS.init({
-      duration: 900, // ms, slow enough to be noticeable
+      duration: 900,
       once: true,
-      offset: 120,   // trigger before element fully enters viewport
+      offset: 120,   
     });
   </script>
 
@@ -1794,7 +1782,7 @@
       const items = carousel.querySelectorAll('.carousel-item');
       let currentIndex = 0;
 
-      // Create indicator container and buttons dynamically
+
       const indicatorsContainer = carousel.parentElement.querySelector('.carousel-indicators');      if (indicatorsContainer) {
         for (let i = 0; i < items.length; i++) {
           const dot = document.createElement('button');
@@ -1813,7 +1801,6 @@
         items.forEach((item, i) => {
           item.classList.toggle('active', i === index);
         });
-        // Update dots active state
         if (indicatorsContainer) {
           indicatorsContainer.querySelectorAll('button').forEach((dot, i) => {
             dot.classList.toggle('active', i === index);
@@ -1831,7 +1818,6 @@
         showItem(currentIndex);
       });
 
-      // Initialize carousel display
       showItem(currentIndex);
     });
   </script>
@@ -1855,7 +1841,6 @@
       toggleButton.addEventListener('click', () => {
         dropdownContent.classList.toggle('active');
 
-        // Optional: change arrow direction
         if(dropdownContent.classList.contains('active')){
           toggleButton.textContent = 'ADDITIONAL EXPERIENCES ▲';
         } else {
@@ -1872,13 +1857,11 @@
     window.addEventListener('scroll', () => {
       const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
       if (scrollTop > lastScrollTop) {
-        // Scroll down
         navbar.classList.add('hidden');
       } else {
-        // Scroll up
         navbar.classList.remove('hidden');
       }
-      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+      lastScrollTop = scrollTop <= 0 ? 0 : scrollTop;
     });
   </script>
 </body>
